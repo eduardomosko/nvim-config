@@ -51,8 +51,8 @@ nmap '<leader>gd <Cmd>lua vim.lsp.buf.definition()<CR>'
 nmap ']d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>'
 nmap '[d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>'
 
-map('s', '<tab>', 'v:lua.tab_complete()', {expr = true, noremap=true})
-map('i', '<tab>', 'v:lua.tab_complete()', {expr = true, noremap=true})
+--map('s', '<tab>', 'v:lua.tab_complete()', {expr = true, noremap=true})
+--map('i', '<tab>', 'v:lua.tab_complete()', {expr = true, noremap=true})
 
 -- Telescope
 nmap "<leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>"
