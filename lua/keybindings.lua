@@ -47,7 +47,7 @@ nmap '<f1> <cmd>Stdheader<cr>'
 -- Lsp
 nmap '<leader>rn <cmd>lua vim.lsp.buf.rename()<CR>'
 nmap '<leader>gd <Cmd>lua vim.lsp.buf.definition()<CR>'
-nmap '<leader>gd <Cmd>lua vim.lsp.buf.declaration()<CR>'
+--nmap '<leader>gd <Cmd>lua vim.lsp.buf.declaration()<CR>'
 nmap ']d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>'
 nmap '[d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>'
 

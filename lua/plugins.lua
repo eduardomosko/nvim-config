@@ -20,16 +20,16 @@ return require('packer').startup (function (use)
 	use 'eduardomosko/header42.nvim'
 
 	-- AutoComplete
-	use 'hrsh7th/nvim-compe'
+	--use 'hrsh7th/nvim-compe'
 
 	-- NerdTree
 	use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
 
 	-- Syntax Highlighting
-	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-	use 'gianarb/vim-flux'
-	use 'tpope/vim-markdown'
+	--use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+	--use 'gianarb/vim-flux'
+	--use 'tpope/vim-markdown'
 
 	-- Telescope
 	use {'nvim-telescope/telescope.nvim',
@@ -42,6 +42,9 @@ return require('packer').startup (function (use)
 	use 'arzg/vim-colors-xcode'
 	use 'sainnhe/sonokai'
 	use 'shaunsingh/nord.nvim'
+	use 'pbrisbin/vim-colors-off'
+	use 't184256/vim-boring'
+	use 'plan9-for-vimspace/acme-colors'
 
 	-- Git
 	use 'airblade/vim-gitgutter'
