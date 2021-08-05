@@ -16,7 +16,9 @@ return require('packer').startup (function (use)
 	use 'kabouzeid/nvim-lspinstall'
 
 	-- 42
-	use { 'vinicius507/norme.nvim', requires = { 'mfussenegger/nvim-lint' }, branch = 'dev' }
+	use { 'vinicius507/norme.nvim', branch = 'dev',
+		requires = {{'nvim-lua/plenary.nvim'}, {'jose-elias-alvarez/null-ls.nvim'}}
+	}
 	use 'eduardomosko/header42.nvim'
 
 	-- AutoComplete

@@ -1,9 +1,7 @@
-local lint = require('lint')
 local norme = require('norme')
+local null_ls = require('null-ls')
+local lspconfig = require('lspconfig')
 
-lint.linters.norme = norme.linter
-
-lint.linters_by_ft = {
-	c    = { 'norme' },
-	cpp  = { 'norme' },
-}
+null_ls.config()
+lspconfig['null-ls'].setup({})
+norme.setup()
