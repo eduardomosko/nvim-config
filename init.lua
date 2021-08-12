@@ -14,7 +14,6 @@ req 'keybindings'
 req 'colorscheme'
 
 req 'treesitter'
-req 'completion'
 req 'nerdtree'
 req 'header'
 req 'linter'
