@@ -15,6 +15,6 @@ autocmd "BufWritePost *.c,*.h lua require('norme').lint()"
 autocmd 'BufWritePost ~/.config/nvim/**/*.lua luafile %'
 
 -- GoFmt
-autocmd "BufWritePost *.go silent !gofmt -w %"
+autocmd "BufWritePost *.go silent !go run golang.org/x/tools/cmd/goimports -w %"
 autocmd "BufWritePost *.go e"
 
