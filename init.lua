@@ -15,3 +15,4 @@ req 'colorscheme'
 
 req 'treesitter'
 req 'nerdtree'
+req 'lsp'

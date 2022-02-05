@@ -15,6 +15,9 @@ return require('packer').startup (function (use)
 	use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
 
+	-- LspConfig
+	use 'neovim/nvim-lspconfig'
+
 	-- Syntax Highlighting
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 

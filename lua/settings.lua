@@ -7,6 +7,7 @@ local o = {
 	wrap = false,
 	cinoptions='(1s',
 	termguicolors = true,
+	signcolumn='yes',
 }
 
 local bo = {

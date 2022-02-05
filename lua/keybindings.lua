@@ -35,21 +35,11 @@ nmap '<leader>_b <Plug>(GitGutterUndoHunk)'
 nmap '<leader>_c <Plug>(GitGutterPreviewHunk)'
 
 --  Enable new
-nmap '<leader>gs :GitGutterStageHunk<cr>'
-nmap '<leader>gu :GitGutterUndoHunk<cr>'
-nmap '<leader>gp :GitGutterPreviewHunk<cr>'
-nmap '<leader>gn :GitGutterNextHunk<cr>'
-nmap '<leader>gN :GitGutterPrevHunk<cr>'
-
--- Lsp
-nmap '<leader>rn <cmd>lua vim.lsp.buf.rename()<CR>'
-nmap '<leader>gd <Cmd>lua vim.lsp.buf.definition()<CR>'
---nmap '<leader>gd <Cmd>lua vim.lsp.buf.declaration()<CR>'
-nmap ']d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>'
-nmap '[d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>'
-
---map('s', '<tab>', 'v:lua.tab_complete()', {expr = true, noremap=true})
---map('i', '<tab>', 'v:lua.tab_complete()', {expr = true, noremap=true})
+nmap '<leader>gs <cmd>GitGutterStageHunk<cr>'
+nmap '<leader>gu <cmd>GitGutterUndoHunk<cr>'
+nmap '<leader>gp <cmd>GitGutterPreviewHunk<cr>'
+nmap '<leader>gn <cmd>GitGutterNextHunk<cr>'
+nmap '<leader>gN <cmd>GitGutterPrevHunk<cr>'
 
 -- Telescope
 nmap "<leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>"
@@ -57,3 +47,20 @@ nmap "<leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>"
 
 -- Closing files
 nmap 'ZA <cmd>qa<cr>'
+
+-- Lsp
+function lsp(client, bufnr)
+	local bmap = function(kb, cmd)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', kb, cmd, nrm)
+	end
+
+	bmap('<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
+	bmap('<leader>gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+	bmap(']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>')
+	bmap('[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>')
+	bmap('K', '<cmd>lua vim.lsp.buf.hover()<cr>')
+end
+
+return {
+	lsp = lsp,
+}
