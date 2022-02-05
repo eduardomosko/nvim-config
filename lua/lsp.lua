@@ -1,3 +1,4 @@
+--[[
 local lspinstall = require('lspinstall')
 local lspconfig  = require('lspconfig')
 
@@ -19,3 +20,5 @@ lspinstall.post_install_hook = function()
 	setup()
 	vim.cmd "bufdo e"
 end
+
+]]--

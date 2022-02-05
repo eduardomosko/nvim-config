@@ -41,9 +41,6 @@ nmap '<leader>gp :GitGutterPreviewHunk<cr>'
 nmap '<leader>gn :GitGutterNextHunk<cr>'
 nmap '<leader>gN :GitGutterPrevHunk<cr>'
 
--- Header
-nmap '<f1> <cmd>Stdheader<cr>'
-
 -- Lsp
 nmap '<leader>rn <cmd>lua vim.lsp.buf.rename()<CR>'
 nmap '<leader>gd <Cmd>lua vim.lsp.buf.definition()<CR>'

@@ -15,12 +15,6 @@ return require('packer').startup (function (use)
 	use 'neovim/nvim-lspconfig'
 	use 'kabouzeid/nvim-lspinstall'
 
-	-- 42
-	use { 'vinicius507/norme.nvim', branch = 'dev',
-		requires = {{'nvim-lua/plenary.nvim'}, {'jose-elias-alvarez/null-ls.nvim'}}
-	}
-	use 'eduardomosko/header42.nvim'
-
 	-- NerdTree
 	use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
@@ -36,6 +30,8 @@ return require('packer').startup (function (use)
 	-- Colorschemes
 	use 'pbrisbin/vim-colors-off'
 	use 'owickstrom/vim-colors-paramount'
+	use 'owickstrom/vim-colors-paramount'
+	use 'joshdick/onedark.vim'
 
 	-- Git
 	use 'airblade/vim-gitgutter'
