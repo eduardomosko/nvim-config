@@ -11,10 +11,6 @@ return require('packer').startup (function (use)
 	-- Packer
 	use 'wbthomason/packer.nvim'
 
-	-- LSP
-	use 'neovim/nvim-lspconfig'
-	use 'kabouzeid/nvim-lspinstall'
-
 	-- NerdTree
 	use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
