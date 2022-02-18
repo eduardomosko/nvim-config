@@ -5,4 +5,5 @@ toggleterm.setup{
 	direction='horizontal',
 
 	open_mapping=[[<leader>o]],
+	insert_mappings=false,
 }
