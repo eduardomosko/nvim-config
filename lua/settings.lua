@@ -1,27 +1,29 @@
-local o = {
-	showmode = false,
-	hidden = true,
-	hlsearch = false,
-	tabstop = 4,
-	shiftwidth = 4,
-	wrap = false,
-	cinoptions='(1s',
-	termguicolors = true,
-	signcolumn = 'yes',
+local settings = {
+	o = {
+		showmode = false,
+		hidden = true,
+		hlsearch = false,
+		tabstop = 4,
+		shiftwidth = 4,
+		wrap = false,
+		cinoptions='(1s',
+		termguicolors = true,
+		signcolumn = 'yes',
+	},
+	bo = {
+		tabstop = 4,
+		shiftwidth = 4,
+		cinoptions='(1s',
+	},
+	wo = {
+		number = true,
+		cursorline = false,
+		wrap = false,
+	},
 }
 
-local bo = {
-	tabstop = 4,
-	shiftwidth = 4,
-	cinoptions='(1s',
-}
-
-local wo = {
-	number = true,
-	cursorline = true,
-	wrap = false,
-}
-
-for k, v in pairs(o) do vim.o[k] = v end
-for k, v in pairs(bo) do vim.bo[k] = v end
-for k, v in pairs(wo) do vim.wo[k] = v end
+for locality, opts in pairs(settings) do
+	for opt, val in pairs(opts) do
+		vim[locality][opt] = val
+	end
+end
