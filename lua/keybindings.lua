@@ -52,6 +52,7 @@ return {
 			vim.api.nvim_buf_set_keymap(bufnr, 'n', kb, cmd, opts)
 		end
 
+		bmap('<leader>lr', '<cmd>LspRestart<cr>')
 		bmap('<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
 		bmap('<leader>d', '<cmd>lua vim.lsp.buf.definition()<cr>')
 		bmap(']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
