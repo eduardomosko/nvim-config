@@ -31,6 +31,7 @@ return require('packer').startup (function (use)
 	use 'owickstrom/vim-colors-paramount'
 	use 'owickstrom/vim-colors-paramount'
 	use 'joshdick/onedark.vim'
+	use 'morhetz/gruvbox'
 
 	-- Git
 	use 'airblade/vim-gitgutter'
