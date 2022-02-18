@@ -7,4 +7,5 @@ toggleterm.setup{
 	open_mapping=[[<leader>o]],
 	terminal_mappings=false,
 	insert_mappings=false,
+	start_in_insert=false,
 }
