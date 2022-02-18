@@ -20,9 +20,7 @@ nmap('çk', ':tabn<cr>')
 nmap('çj', ':tabp<cr>')
 
 -- Terminal life
-nmap('<leader>ot', ':bot 15sp | term<enter>A')
 tmap('<esc>', '<C-\\><C-n>')
-tmap('<C-l>', '<cmd>set scrollback=1<cr><C-l><cmd>sleep 100m<cr><C-l><cmd>set scrollback=10000<cr>')
 
 -- GitGutter
 --  Disable old

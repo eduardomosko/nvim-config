@@ -36,4 +36,7 @@ return require('packer').startup (function (use)
 	-- Git
 	use 'airblade/vim-gitgutter'
 	use 'tpope/vim-fugitive'
+
+	-- Terminal
+	use 'akinsho/toggleterm.nvim'
 end)
