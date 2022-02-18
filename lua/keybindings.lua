@@ -1,7 +1,8 @@
 local map = vim.api.nvim_set_keymap
 
-local nmap = function(kb, cmd) map('n', kb, cmd, {silent = true, noremap = true}) end
-local tmap = function(kb, cmd) map('t', kb, cmd, {silent = true, noremap = true}) end
+local opts = {silent = true, noremap = true}
+local nmap = function(kb, cmd) map('n', kb, cmd, opts) end
+local tmap = function(kb, cmd) map('t', kb, cmd, opts) end
 
 vim.g.mapleader = ' '
 
@@ -21,6 +22,7 @@ nmap('çj', ':tabp<cr>')
 -- Terminal life
 nmap('<leader>ot', ':bot 15sp | term<enter>A')
 tmap('<esc>', '<C-\\><C-n>')
+tmap('<C-l>', '<cmd>set scrollback=1<cr><C-l><cmd>sleep 100m<cr><C-l><cmd>set scrollback=10000<cr>')
 
 -- GitGutter
 --  Disable old
@@ -42,17 +44,20 @@ nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
 -- Closing files
 nmap('ZA', '<cmd>qa<cr>')
 
+-- Formatting
+nmap('<C-I>', "<cmd>lua require('formatter').format()<cr>")
+
 -- Lsp
 return {
 	lsp = function(client, bufnr)
 		local bmap = function(kb, cmd)
-			vim.api.nvim_buf_set_keymap(bufnr, 'n', kb, cmd, nrm)
+			vim.api.nvim_buf_set_keymap(bufnr, 'n', kb, cmd, opts)
 		end
 
 		bmap('<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
-		bmap('<leader>gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
-		bmap(']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>')
-		bmap('[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>')
+		bmap('<leader>d', '<cmd>lua vim.lsp.buf.definition()<cr>')
+		bmap(']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
+		bmap('[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
 		bmap('K', '<cmd>lua vim.lsp.buf.hover()<cr>')
 	end,
 }
