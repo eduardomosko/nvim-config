@@ -6,7 +6,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 	vim.api.nvim_command "packadd packer.nvim"
 end
 
-
 return require('packer').startup (function (use)
 	-- Packer
 	use 'wbthomason/packer.nvim'
@@ -29,7 +28,6 @@ return require('packer').startup (function (use)
 	-- Colorschemes
 	use 'pbrisbin/vim-colors-off'
 	use 'owickstrom/vim-colors-paramount'
-	use 'owickstrom/vim-colors-paramount'
 	use 'joshdick/onedark.vim'
 	use 'morhetz/gruvbox'
 
@@ -39,4 +37,7 @@ return require('packer').startup (function (use)
 
 	-- Terminal
 	use 'akinsho/toggleterm.nvim'
+
+	-- Copilot
+	use 'github/copilot.vim'
 end)
