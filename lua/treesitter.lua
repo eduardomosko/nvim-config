@@ -9,7 +9,8 @@ require('nvim-treesitter.configs').setup {
 		'yaml',
 		'json',
 		'go',
-		'cpp'
+		'cpp',
+		'css',
 	},
 	highlight = { enable = true }
 }
