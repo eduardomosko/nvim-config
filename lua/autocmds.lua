@@ -6,5 +6,5 @@ end
 autocmd "BufWritePost plugins.lua PackerCompile"
 
 -- AutoReload config on edit
-autocmd 'BufWritePost ~/.config/nvim/**/*.lua luafile %'
+autocmd 'BufWritePost ~/.config/nvim/**/*.lua luafile ~/.config/nvim/init.lua'
 

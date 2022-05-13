@@ -1,3 +1,18 @@
+local packages = {
+	'plugins',
+	
+	'abbrevs',
+	'settings',
+	'autocmds',
+	'keybindings',
+	'colorscheme',
+	
+	'treesitter',
+	'nerdtree',
+	'terminal',
+	'lsp',
+}
+
 local function req(x)
 	local success, ret = pcall(require, x)
 	if not success then
@@ -5,15 +20,13 @@ local function req(x)
 	end
 end
 
-req 'plugins'
+-- Unload packages
+for _, x in pairs(packages) do
+	package.loaded[x] = nil
+end
 
-req 'abbrevs'
-req 'settings'
-req 'autocmds'
-req 'keybindings'
-req 'colorscheme'
+-- Reload them
+for _, x in pairs(packages) do
+	req(x)
+end
 
-req 'treesitter'
-req 'nerdtree'
-req 'terminal'
-req 'lsp'

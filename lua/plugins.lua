@@ -31,6 +31,11 @@ return require('packer').startup (function (use)
 	use 'joshdick/onedark.vim'
 	use 'morhetz/gruvbox'
 
+	use 'sonph/onehalf'
+	use 'sainnhe/gruvbox-material'
+	use 'hzchirs/vim-material'
+	use 'sainnhe/everforest'
+
 	-- Git
 	use 'airblade/vim-gitgutter'
 	use 'tpope/vim-fugitive'
