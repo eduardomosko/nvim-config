@@ -9,7 +9,7 @@ local settings = {
 		cinoptions='(1s',
 		termguicolors = true,
 		signcolumn = 'yes',
-		background = 'light',
+		background = 'dark',
 	},
 	bo = {
 		tabstop = 4,

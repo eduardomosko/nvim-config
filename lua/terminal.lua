@@ -8,4 +8,5 @@ toggleterm.setup{
 	terminal_mappings=false,
 	insert_mappings=false,
 	start_in_insert=false,
+	shade_terminals=false,
 }

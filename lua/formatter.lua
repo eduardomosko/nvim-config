@@ -3,6 +3,7 @@ local CURRENT_BUF = 0
 local formatters = {
 	rust = 'rustfmt --edition "2021"',
 	go = 'go run golang.org/x/tools/cmd/goimports@latest',
+	html = 'prettier --parser html',
 	svelte = 'prettier --parser svelte',
 	javascript = 'prettier --parser flow',
 	typescript = 'prettier --parser typescript',
@@ -31,6 +32,7 @@ return {
 		local format = formatters[ft]
 	
 		if format ~= nil then
+			print('format')
 			local oldlines = vim.api.nvim_buf_get_lines(CURRENT_BUF, 0, -1, true)
 	
 			local newlines = vim.fn.systemlist(format, oldlines)
@@ -42,6 +44,8 @@ return {
 			if not equals(newlines, oldlines) then
 				vim.api.nvim_buf_set_lines(CURRENT_BUF, 0, -1, true, newlines)
 			end
+		else
+			print('no formatter available')
 		end
 	end,
 }

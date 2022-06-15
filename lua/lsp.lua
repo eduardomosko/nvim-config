@@ -38,7 +38,30 @@ local configs = {
 		return { 'go', 'run', tool, 'serve' }
 	end,
 	svelte = function()
-		return { 'svelteserver', '--stdio' }
+		local tool = 'svelteserver'
+
+		vim.fn.system({'which', tool})
+		local err = vim.v.shell_error
+
+		if vim.v.shell_error ~= 0 then
+			print('installing svelte language server')
+			vim.fn.system('npm install -g  svelte-language-server')
+		end
+
+		return { tool, '--stdio' }
+	end,
+	tsserver = function()
+		local tool = 'typescript-language-server'
+
+		vim.fn.system({'which', tool})
+		local err = vim.v.shell_error
+
+		if vim.v.shell_error ~= 0 then
+			print('installing typescript language server')
+			vim.fn.system('npm install -g typescript ' .. tool)
+		end
+
+		return { tool, '--stdio' }
 	end
 }
 
