@@ -19,6 +19,7 @@ return require('packer').startup (function (use)
 
 	-- Syntax Highlighting
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+	use 'delphinus/vim-firestore'
 
 	-- Telescope
 	use {'nvim-telescope/telescope.nvim',
