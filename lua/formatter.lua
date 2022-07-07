@@ -3,12 +3,12 @@ local CURRENT_BUF = 0
 local formatters = {
 	rust = 'rustfmt --edition "2021"',
 	go = 'go run golang.org/x/tools/cmd/goimports@latest',
-	html = 'prettier --parser html',
-	svelte = 'prettier --parser svelte',
-	javascript = 'prettier --parser flow',
-	typescript = 'prettier --parser typescript',
-	json = 'prettier --parser json',
-	css = 'prettier --parser css',
+	html = 'npx prettier --parser html',
+	svelte = 'npx prettier --parser svelte',
+	javascript = 'npx prettier --parser flow',
+	typescript = 'npx prettier --parser typescript',
+	json = 'npx prettier --parser json',
+	css = 'npx prettier --parser css',
 }
 
 -- Compares every item of a table
