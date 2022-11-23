@@ -24,7 +24,7 @@ local configs = {
 			vim.api.nvim_command('!chmod +x ' .. target)
 		end
 
-		return { target }
+		return { cmd = { target } }
 	end,
 	gopls = function()
 		local tool = 'golang.org/x/tools/gopls@latest' 
@@ -35,7 +35,7 @@ local configs = {
 			vim.fn.system('go install ' .. tool)
 		end
 
-		return { 'go', 'run', tool, 'serve' }
+		return { cmd = { 'go', 'run', tool, 'serve' } }
 	end,
 	svelte = function()
 		local tool = 'svelteserver'
@@ -48,7 +48,18 @@ local configs = {
 			vim.fn.system('npm install -g svelte-language-server')
 		end
 
-		return { tool, '--stdio' }
+		return {
+			cmd = { tool, '--stdio' },
+			settings = {
+				svelte = {
+					plugin = {
+						svelte = {
+							useNewTransformation = true,
+						},
+					},
+				},
+			},
+		}
 	end,
 	tsserver = function()
 		local tool = 'typescript-language-server'
@@ -61,21 +72,18 @@ local configs = {
 			vim.fn.system('npm install -g typescript ' .. tool)
 		end
 
-		return { tool, '--stdio' }
-	end
+		return { cmd = { tool, '--stdio' } }
+	end,
 }
 
-for n, fn in pairs(configs) do
-	local success, cmd = pcall(fn)
+for server, getConfig in pairs(configs) do
+	local success, config = pcall(getConfig)
 	if success then
-		lsp[n].setup{
-			cmd = cmd,
-			flags = {
-				debounce_text_changes = 150,
-			},
-			on_attach = kbs.lsp,
-		}
+		local s, err = pcall(lsp[server].setup, vim.tbl_deep_extend('keep', { flags = { debounce_text_changes = 150, }, on_attach = kbs.lsp, }, config))
+		if not s then 
+			vim.notify("failed setting up lsp " .. n .. " because: " .. err, vim.log.levels.ERROR)
+		end
 	else
-		print('failed setting up', n, ':', cmd)
+		vim.notify("failed getting lsp config " .. n .. " because: " .. config, vim.log.levels.ERROR)
 	end
 end
