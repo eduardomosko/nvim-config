@@ -9,6 +9,7 @@ local formatters = {
 	typescript = 'npx prettier --parser typescript',
 	json = 'npx prettier --parser json',
 	css = 'npx prettier --parser css',
+	lua = 'cat -',
 }
 
 -- Compares every item of a table
@@ -32,7 +33,6 @@ return {
 		local format = formatters[ft]
 	
 		if format ~= nil then
-			print('format')
 			local oldlines = vim.api.nvim_buf_get_lines(CURRENT_BUF, 0, -1, true)
 	
 			local newlines = vim.fn.systemlist(format, oldlines, true)
@@ -40,12 +40,15 @@ return {
 				print(table.concat(newlines, '\n'))
 				return
 			end
+
+			-- removes trailing newlines
+			while newlines[#newlines] == "" do
+				table.remove(newlines, #newlines)
+			end
 	
 			if not equals(newlines, oldlines) then
 				vim.api.nvim_buf_set_lines(CURRENT_BUF, 0, -1, true, newlines)
 			end
-		else
-			print('no formatter available')
 		end
 	end,
 }
