@@ -26,6 +26,9 @@ return require('packer').startup (function (use)
 		requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
 	}
 
+	-- Auto save
+	use 'pocco81/auto-save.nvim'
+
 	-- Todo
 	use {"folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim"}
 
