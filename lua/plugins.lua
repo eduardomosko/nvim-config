@@ -5,6 +5,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 	vim.api.nvim_command("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
 	vim.api.nvim_command "packadd packer.nvim"
 end
+-- TODO adsfa
 
 return require('packer').startup (function (use)
 	-- Packer
@@ -26,16 +27,19 @@ return require('packer').startup (function (use)
 		requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
 	}
 
+	-- Todo
+	use {"folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim"}
+
 	-- Colorschemes
 	use 'pbrisbin/vim-colors-off'
 	use 'owickstrom/vim-colors-paramount'
 	use 'joshdick/onedark.vim'
 	use 'morhetz/gruvbox'
-
 	use 'sonph/onehalf'
-	use 'sainnhe/gruvbox-material'
-	use 'hzchirs/vim-material'
-	use 'sainnhe/everforest'
+	use 'liuchengxu/space-vim-dark'
+	use 'kabbamine/yowish.vim'
+	use 'arcticicestudio/nord-vim'
+	use { "mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim" }
 
 	-- Git
 	use 'airblade/vim-gitgutter'
@@ -43,7 +47,4 @@ return require('packer').startup (function (use)
 
 	-- Terminal
 	use 'akinsho/toggleterm.nvim'
-
-	-- Copilot
-	use 'github/copilot.vim'
 end)

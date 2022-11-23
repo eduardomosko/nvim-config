@@ -8,6 +8,7 @@ local packages = {
 	'colorscheme',
 	
 	'treesitter',
+	'tele',
 	'nerdtree',
 	'terminal',
 	'lsp',

@@ -45,7 +45,7 @@ local configs = {
 
 		if vim.v.shell_error ~= 0 then
 			print('installing svelte language server')
-			vim.fn.system('npm install -g  svelte-language-server')
+			vim.fn.system('npm install -g svelte-language-server')
 		end
 
 		return { tool, '--stdio' }

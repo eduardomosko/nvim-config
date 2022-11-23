@@ -35,7 +35,7 @@ return {
 			print('format')
 			local oldlines = vim.api.nvim_buf_get_lines(CURRENT_BUF, 0, -1, true)
 	
-			local newlines = vim.fn.systemlist(format, oldlines)
+			local newlines = vim.fn.systemlist(format, oldlines, true)
 			if vim.v.shell_error ~= 0 then
 				print(table.concat(newlines, '\n'))
 				return
