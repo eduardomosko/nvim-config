@@ -14,13 +14,13 @@ nmap('<leader>j', '<C-w>j')
 nmap('<leader>k', '<C-w>k')
 nmap('<leader>l', '<C-w>l')
 
-nmap('çh', ':bp<cr>')
-nmap('çl', ':bn<cr>')
 nmap('çk', ':tabn<cr>')
 nmap('çj', ':tabp<cr>')
 
 -- Terminal life
 tmap('<esc>', '<C-\\><C-n>')
+nmap('L', '<cmd>lua require"terminal".next_term()<cr>')
+nmap('H', '<cmd>lua require"terminal".prev_term()<cr>')
 
 -- GitGutter
 --  Disable old
