@@ -1,3 +1,5 @@
+require('keybindings')
+
 require('toggleterm').setup{
 	size=15,
 	direction='horizontal',
@@ -43,6 +45,26 @@ return {
 			print("prev:", n)
 			terms[n]:toggle()
 			current:toggle()
+		end
+	end,
+	quit_if_no_terminals = function()
+		local terms = t.get_all()
+		local n = #terms
+		vim.fn.system('echo "'..n..'" >> ran')
+		if n ~= 0 then
+			local message = "There are "..n.." open terminals, please close them before quitting"
+			if n == 1 then
+				message = "There's an open terminal, please close it before quitting"
+			end
+
+			for _, term in pairs(terms) do
+				term:close()
+			end
+
+			terms[1]:open()
+			print(message .. "\n\n")
+		else
+			vim.cmd "qa"
 		end
 	end,
 }

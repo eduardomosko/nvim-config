@@ -40,7 +40,7 @@ nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>")
 nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
 
 -- Closing files
-nmap('ZA', '<cmd>qa<cr>')
+nmap('ZA', '<cmd>lua require"terminal".quit_if_no_terminals()<cr>')
 
 -- Formatting
 nmap('<leader>i', "<cmd>lua require('formatter').format()<cr>")
