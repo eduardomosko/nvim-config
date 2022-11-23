@@ -5,7 +5,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 	vim.api.nvim_command("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
 	vim.api.nvim_command "packadd packer.nvim"
 end
--- TODO adsfa
 
 return require('packer').startup (function (use)
 	-- Packer
@@ -33,7 +32,7 @@ return require('packer').startup (function (use)
 	-- Colorschemes
 	use 'pbrisbin/vim-colors-off'
 	use 'owickstrom/vim-colors-paramount'
-	use 'joshdick/onedark.vim'
+	use 'navarasu/onedark.nvim'
 	use 'morhetz/gruvbox'
 	use 'sonph/onehalf'
 	use 'liuchengxu/space-vim-dark'
