@@ -50,7 +50,6 @@ return {
 	quit_if_no_terminals = function()
 		local terms = t.get_all()
 		local n = #terms
-		vim.fn.system('echo "'..n..'" >> ran')
 		if n ~= 0 then
 			local message = "There are "..n.." open terminals, please close them before quitting"
 			if n == 1 then

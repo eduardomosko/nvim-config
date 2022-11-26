@@ -35,7 +35,7 @@ return require('packer').startup (function (use)
 	-- Colorschemes
 	use 'pbrisbin/vim-colors-off'
 	use 'owickstrom/vim-colors-paramount'
-	use 'navarasu/onedark.nvim'
+	use({ 'monsonjeremy/onedark.nvim', branch = 'treesitter' })
 	use 'morhetz/gruvbox'
 	use 'sonph/onehalf'
 	use 'liuchengxu/space-vim-dark'
