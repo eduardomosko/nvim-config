@@ -12,6 +12,9 @@ local packages = {
 	'nerdtree',
 	'terminal',
 	'lsp',
+
+	-- Setup other plugins
+	'setup',
 }
 
 local function req(x)
