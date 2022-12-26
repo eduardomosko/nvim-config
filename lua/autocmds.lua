@@ -4,6 +4,7 @@ end
 
 -- Recompile plugins.lua
 autocmd "BufWritePost plugins.lua PackerCompile"
+autocmd "BufWritePost plugins.lua <cmd>luafile %<cr>"
 
 -- AutoSave files
 require('auto-save').setup{

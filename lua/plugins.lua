@@ -29,19 +29,23 @@ return require('packer').startup (function (use)
 	-- Auto save
 	use 'pocco81/auto-save.nvim'
 
+	-- Surround
+	--use 'echasnovski/mini.surround'
+	use {"kylechui/nvim-surround", tag = "*"}
+
 	-- Todo
 	use {"folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim"}
 
 	-- Colorschemes
 	use 'pbrisbin/vim-colors-off'
 	use 'owickstrom/vim-colors-paramount'
-	use({ 'monsonjeremy/onedark.nvim', branch = 'treesitter' })
+	use {'monsonjeremy/onedark.nvim', branch = 'treesitter'}
 	use 'morhetz/gruvbox'
 	use 'sonph/onehalf'
 	use 'liuchengxu/space-vim-dark'
 	use 'kabbamine/yowish.vim'
 	use 'arcticicestudio/nord-vim'
-	use { "mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim" }
+	use {"mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim"}
 
 	-- Git
 	use 'airblade/vim-gitgutter'
