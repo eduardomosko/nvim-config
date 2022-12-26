@@ -2,12 +2,13 @@ local lsp = require 'lspconfig'
 local kbs = require './keybindings'
 
 local function path_exists(path)
-	return vim.fn.filereadable(vim.fn.glob(install_path))
+	local res = vim.fn.filereadable(vim.fn.glob(path))
+	return res ~= 0
 end
 
 local install_path = vim.fn.stdpath('data') .. '/lsp'
 if not path_exists(install_path) then
-	vim.api.nvim_command('!mkdir ' .. install_path)
+	vim.fn.system('mkdir -p ' .. install_path)
 end
 
 -- Each config is a function that auto-installs the lsp
@@ -20,15 +21,29 @@ local configs = {
 
 		if not path_exists(target) then
 			print('installing rust language server')
-			vim.api.nvim_command('!bash -c "' .. data.download .. ' ' .. target .. '"')
-			vim.api.nvim_command('!chmod +x ' .. target)
+			vim.fn.system('bash -c "' .. download .. ' ' .. target .. '"')
+			vim.fn.system('chmod +x ' .. target)
+		end
+
+		return { cmd = { target } }
+	end,
+	clangd = function()
+		local cmd = "clangd"
+		local version = "15.0.3"
+		local download = "wget -q https://github.com/clangd/clangd/releases/download/"..version.."/clangd-linux-"..version..".zip && unzip -q clangd-linux-"..version..".zip && rm clangd-linux-"..version..".zip"
+		local target = install_path .. '/clangd_15.0.3/bin/' .. cmd
+
+		if not path_exists(target) then
+			print('installing clangd language server')
+			vim.fn.system("bash -c 'cd "..install_path.." && " .. download .. " && chmod +x "..target.."'")
 		end
 
 		return { cmd = { target } }
 	end,
 	gopls = function()
 		local tool = 'golang.org/x/tools/gopls@latest' 
-		local toolpath = vim.fn.system('go env GOPATH') .. '/bin/gopls'
+		local gopath = vim.fn.system('go env GOPATH')
+		local toolpath = gopath:sub(0, #gopath - 1) .. '/bin/gopls'
 
 		if not path_exists(toolpath) then
 			print('installing go language server')
@@ -81,9 +96,9 @@ for server, getConfig in pairs(configs) do
 	if success then
 		local s, err = pcall(lsp[server].setup, vim.tbl_deep_extend('keep', { flags = { debounce_text_changes = 150, }, on_attach = kbs.lsp, }, config))
 		if not s then 
-			vim.notify("failed setting up lsp " .. n .. " because: " .. err, vim.log.levels.ERROR)
+			vim.notify("failed setting up lsp " .. server .. " because: " .. err, vim.log.levels.ERROR)
 		end
 	else
-		vim.notify("failed getting lsp config " .. n .. " because: " .. config, vim.log.levels.ERROR)
+		vim.notify("failed getting lsp config " .. server .. " because: " .. config, vim.log.levels.ERROR)
 	end
 end
