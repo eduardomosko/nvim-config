@@ -5,8 +5,8 @@ parser_config.svelte = {
 		url = "https://github.com/eduardomosko/tree-sitter-svelte",
 		branch = "fix-empty-await-then",
 		files = { "src/parser.c", "src/scanner.c" },
-		requires_generate_from_grammar = false,
-	}
+		revision = '35e4e149475a3386d6cf614e35436a47d26a876d',
+	},
 }
 
 require('nvim-treesitter.configs').setup {
