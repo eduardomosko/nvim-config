@@ -43,7 +43,8 @@ nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
 nmap('ZA', '<cmd>lua require"terminal".quit_if_no_terminals()<cr>')
 
 -- Formatting
-nmap('<leader>i', "<cmd>lua require('formatter').format()<cr>")
+nmap('<leader>i', "<cmd>lua require('formatter').format(false)<cr>")
+nmap('<leader>I', "<cmd>lua require('formatter').format(true)<cr>")
 
 -- Lsp
 return {

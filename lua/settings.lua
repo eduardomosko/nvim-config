@@ -18,7 +18,7 @@ local settings = {
 	},
 	wo = {
 		number = true,
-		cursorline = false,
+		cursorline = true,
 		wrap = false,
 	},
 }

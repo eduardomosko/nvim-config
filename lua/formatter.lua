@@ -2,7 +2,7 @@ local CURRENT_BUF = 0
 
 local formatters = {
 	rust = 'rustfmt --edition "2021"',
-	go = 'go run golang.org/x/tools/cmd/goimports@latest',
+	go = 'gofmt',
 	html = 'npx prettier --parser html',
 	svelte = 'npx prettier --parser svelte',
 	javascript = 'npx prettier --parser flow',
@@ -10,6 +10,10 @@ local formatters = {
 	json = 'npx prettier --parser json',
 	css = 'npx prettier --parser css',
 	lua = 'cat -',
+}
+
+local fixers = {
+	go = 'go run golang.org/x/tools/cmd/goimports@latest',
 }
 
 -- Compares every item of a table
@@ -28,9 +32,12 @@ local function equals(l1, l2)
 end
 
 return {
-	format = function()
+	format = function(fix)
 		local ft = vim.bo.filetype
 		local format = formatters[ft]
+		if fix and fixers[ft] then
+			format = fixers[ft]
+		end
 	
 		if format ~= nil then
 			local oldlines = vim.api.nvim_buf_get_lines(CURRENT_BUF, 0, -1, true)
