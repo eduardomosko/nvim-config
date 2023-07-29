@@ -1,21 +1,34 @@
--- Auto install packer if not found
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+local bootstrapped = (function()
+	-- Auto install packer if not found
+	local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+	
+	if not vim.loop.fs_stat(install_path) then
+		vim.fn.system {'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path}
+		vim.cmd 'packadd packer.nvim'
+		return true
+	end
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-	vim.api.nvim_command("!git clone --depth 1 https://github.com/wbthomason/packer.nvim " .. install_path)
-	vim.api.nvim_command "packadd packer.nvim"
-end
+	return false
+end)()
 
 return require('packer').startup(function (use)
 	-- Packer
 	use 'wbthomason/packer.nvim'
 
 	-- NerdTree
+	-- TODO: install lua-tree or something like that
 	use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
 
 	-- LspConfig
 	use 'neovim/nvim-lspconfig'
+
+	use 'hrsh7th/nvim-cmp'
+	use 'hrsh7th/cmp-nvim-lsp'
+	use 'hrsh7th/cmp-buffer'
+	use 'hrsh7th/cmp-path'
+	use 'L3MON4D3/LuaSnip'
+	use 'saadparwaiz1/cmp_luasnip'
 
 	-- Syntax Highlighting
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
@@ -47,4 +60,8 @@ return require('packer').startup(function (use)
 
 	-- Terminal
 	use 'akinsho/toggleterm.nvim'
+
+	if bootstrapped then
+		require('packer').sync()
+	end
 end)
