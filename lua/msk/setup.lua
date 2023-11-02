@@ -119,8 +119,10 @@ section('lsp', function(section)
 		clangd = {},
 		jdtls = {},
 		gopls = {},
-		gopls = {},
 		tsserver = {},
+		html = {},
+		pyright = {},
+		hls= { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 		svelte = {
 			settings = {
 				svelte = {
@@ -274,8 +276,8 @@ section('terminal', function(section)
 			end
 		end
 
-		vim.keymap.set('t', 'L', next_term)
-		vim.keymap.set('t', 'H', prev_term)
+		vim.keymap.set('n', 'L', next_term)
+		vim.keymap.set('n', 'H', prev_term)
 
 		-- TODO: add fallback if terminal is not loaded
 		vim.keymap.set('n', 'ZA', quit_if_no_terminals)
@@ -308,18 +310,41 @@ section('todo-comments', function(section)
 end)
 
 section('treesitter', function(section)
-	section('patch-svelte-parser', function(section)
-		-- Uses my version of parser
+	section('custom-parsers', function(section)
 		local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-		parser_config.svelte = {
-			install_info = {
-				url = "https://github.com/eduardomosko/tree-sitter-svelte",
-				branch = "fix-empty-await-then",
-				files = { "src/parser.c", "src/scanner.c" },
-				revision = '35e4e149475a3386d6cf614e35436a47d26a876d',
-			},
-		}
+
+		section('my-svelte', function(section)
+			-- Uses my version of parser
+			parser_config.svelte = {
+				install_info = {
+					url = "https://github.com/eduardomosko/tree-sitter-svelte",
+					branch = "fix-empty-await-then",
+					files = { "src/parser.c", "src/scanner.c" },
+					revision = '35e4e149475a3386d6cf614e35436a47d26a876d',
+				},
+			}
+		end)
+
+		--[[
+		section('go-templates', function(section)
+			parser_config.gotmpl = {
+				install_info = {
+					url = "https://github.com/ngalaiko/tree-sitter-go-template",
+					files = {"src/parser.c"}
+				},
+				filetype = "gotmpl",
+				used_by = {"gohtmltmpl", "gotexttmpl", "gotmpl"}
+			}
+
+			vim.filetype.add({
+				extension = {
+					gotmpl = 'gotmpl',
+				},
+			})
+		end)
+		]]--
 	end)
+
 
 	require('nvim-treesitter.configs').setup{
 		ensure_installed = {
@@ -332,6 +357,7 @@ section('treesitter', function(section)
 			'yaml',
 			'json',
 			'go',
+			--'gotmpl',
 			'cpp',
 			'css',
 			'html',
