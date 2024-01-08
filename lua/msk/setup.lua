@@ -122,6 +122,7 @@ section('lsp', function(section)
 		tsserver = {},
 		html = {},
 		pyright = {},
+		templ = {},
 		hls= { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 		svelte = {
 			settings = {
@@ -325,24 +326,17 @@ section('treesitter', function(section)
 			}
 		end)
 
-		--[[
-		section('go-templates', function(section)
-			parser_config.gotmpl = {
+		section('go-templ', function(section)
+			parser_config.templ = {
 				install_info = {
-					url = "https://github.com/ngalaiko/tree-sitter-go-template",
-					files = {"src/parser.c"}
+					url = "https://github.com/vrischmann/tree-sitter-templ.git",
+					files = {"src/parser.c", "src/scanner.c"},
+					branch = "master",
 				},
-				filetype = "gotmpl",
-				used_by = {"gohtmltmpl", "gotexttmpl", "gotmpl"}
 			}
 
-			vim.filetype.add({
-				extension = {
-					gotmpl = 'gotmpl',
-				},
-			})
+			vim.treesitter.language.register('templ', 'templ')
 		end)
-		]]--
 	end)
 
 
@@ -357,7 +351,7 @@ section('treesitter', function(section)
 			'yaml',
 			'json',
 			'go',
-			--'gotmpl',
+			'templ',
 			'cpp',
 			'css',
 			'html',
