@@ -6,11 +6,13 @@ section('plugins', function(section)
 
 	section('recompile', function(section)
 		local augroup = vim.api.nvim_create_augroup('recompile-plugins', { clear = true })
+		--[[
 		vim.api.nvim_create_autocmd('BufWritePost', {
 			pattern = 'plugins.lua',
 			callback = 'luafile %',
 			group = augroup,
 		})
+		]]--
 		vim.api.nvim_create_autocmd('BufWritePost', {
 			pattern = 'plugins.lua',
 			callback = require('packer').compile,
@@ -148,6 +150,10 @@ section('lsp', function(section)
 				lsp[server].setup(vim.tbl_deep_extend('keep', defaults, config))
 			end)
 		end
+	end)
+
+	section('mason', function(section)
+		require("mason").setup()
 	end)
 end)
 
@@ -304,6 +310,15 @@ section('telescope', function(section)
 			file_ignore_patterns= {'^package%-lock%.json'}
 		}
 	}
+
+	section('keymaps', function(section)
+		local builtin = require('telescope.builtin')
+
+		vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+		vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+		vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+		vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+	end)
 end)
 
 section('todo-comments', function(section)
@@ -352,6 +367,7 @@ section('treesitter', function(section)
 			'json',
 			'go',
 			'templ',
+			'lua',
 			'cpp',
 			'css',
 			'html',
