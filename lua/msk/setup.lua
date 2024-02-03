@@ -125,6 +125,7 @@ section('lsp', function(section)
 		html = {},
 		pyright = {},
 		templ = {},
+		ocamllsp = {},
 		hls= { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 		svelte = {
 			settings = {
@@ -336,7 +337,7 @@ section('treesitter', function(section)
 					url = "https://github.com/eduardomosko/tree-sitter-svelte",
 					branch = "fix-empty-await-then",
 					files = { "src/parser.c", "src/scanner.c" },
-					revision = '35e4e149475a3386d6cf614e35436a47d26a876d',
+					revision = 'df1d7e626c7f888fdeb43ba4820ea8ddb69bb1e0',
 				},
 			}
 		end)
@@ -371,6 +372,7 @@ section('treesitter', function(section)
 			'cpp',
 			'css',
 			'html',
+			'ocaml',
 		},
 		highlight = { enable = true }
 	}
