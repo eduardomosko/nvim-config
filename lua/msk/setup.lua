@@ -5,18 +5,28 @@ section('plugins', function(section)
 	require 'msk.plugins'
 
 	section('recompile', function(section)
-		local augroup = vim.api.nvim_create_augroup('recompile-plugins', { clear = true })
-		--[[
-		vim.api.nvim_create_autocmd('BufWritePost', {
-			pattern = 'plugins.lua',
-			callback = 'luafile %',
-			group = augroup,
+		local augroup = vim.api.nvim_create_augroup('recompile-plugins', {
+			clear = true,
 		})
-		]]--
+
 		vim.api.nvim_create_autocmd('BufWritePost', {
 			pattern = 'plugins.lua',
 			callback = require('packer').compile,
 			group = augroup,
+		})
+	end)
+
+	section('disable-zig-vim', function(section)
+		-- zig.vim comes with a bunch of intrusive defaults, so I disable it
+		local augroup = vim.api.nvim_create_augroup('disable-zig-vim', {
+			clear = true,
+		})
+		vim.api.nvim_create_autocmd('BufReadPost', {
+			pattern = '*.zig',
+			group = augroup,
+			callback = function()
+				vim.b.did_ftplugin = 1
+			end
 		})
 	end)
 end)
@@ -126,7 +136,8 @@ section('lsp', function(section)
 		pyright = {},
 		templ = {},
 		ocamllsp = {},
-		hls= { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
+		zls = {},
+		hls = { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 		svelte = {
 			settings = {
 				svelte = {
@@ -373,7 +384,9 @@ section('treesitter', function(section)
 			'css',
 			'html',
 			'ocaml',
+			'zig',
 		},
 		highlight = { enable = true }
 	}
 end)
+
