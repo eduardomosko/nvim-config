@@ -32,7 +32,7 @@ return require('packer').startup(function (use)
 	use 'saadparwaiz1/cmp_luasnip'
 
 	-- Syntax Highlighting
-	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', tag = 'v0.8.5.2'}
 	use 'delphinus/vim-firestore'
     use "vrischmann/tree-sitter-templ"
 
