@@ -69,6 +69,9 @@ end)
 
 section('cmd-abbrevs', function(section)
 	msk.cabbrev {'git', 'Git'}
+	msk.cabbrev {'gti', 'Git'}
+	msk.cabbrev {'tig', 'Git'}
+	msk.cabbrev {'tgi', 'Git'}
 
 	msk.cabbrev {'WQ', 'wq'}
 	msk.cabbrev {'Wq', 'wq'}
@@ -80,7 +83,7 @@ section('cmd-abbrevs', function(section)
 end)
 
 section('colorscheme', function(section)
-	vim.cmd.colorscheme 'catppuccin-frappe'
+	vim.cmd.colorscheme 'catppuccin-mocha'
 end)
 
 section('keymaps', function(section)
@@ -138,7 +141,8 @@ section('lsp', function(section)
 		ocamllsp = {},
 		gleam = {},
 		zls = {},
-		hls = { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
+		terraformls = {},
+		hls= { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 		svelte = {
 			settings = {
 				svelte = {
@@ -387,6 +391,7 @@ section('treesitter', function(section)
 			'typescript',
 			'yaml',
 			'zig',
+			'terraform',
 		},
 		highlight = { enable = true }
 	}
