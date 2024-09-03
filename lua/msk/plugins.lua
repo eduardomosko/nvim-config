@@ -32,7 +32,7 @@ return require('packer').startup(function (use)
 	use 'saadparwaiz1/cmp_luasnip'
 
 	-- Syntax Highlighting
-	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', tag = 'v0.8.5.2'}
+	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', tag = 'v0.9.2'}
 	use 'delphinus/vim-firestore'
     use "vrischmann/tree-sitter-templ"
 
@@ -53,6 +53,7 @@ return require('packer').startup(function (use)
 	-- Colorschemes
 	use 'morhetz/gruvbox'
 	use 'pbrisbin/vim-colors-off'
+	use 'Aliqyan-21/darkvoid.nvim'
 	use {'catppuccin/nvim', as = 'catppuccin'}
 	use {'monsonjeremy/onedark.nvim', branch = 'treesitter'}
 

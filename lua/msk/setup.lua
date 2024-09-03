@@ -141,6 +141,7 @@ section('lsp', function(section)
 		ocamllsp = {},
 		gleam = {},
 		zls = {},
+		ols = {},
 		terraformls = {},
 		hls= { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 		svelte = {
