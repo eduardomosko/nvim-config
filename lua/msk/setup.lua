@@ -172,6 +172,28 @@ section('lsp', function(section)
 	section('mason', function(section)
 		require("mason").setup()
 	end)
+
+	section('gdscript', function(section)
+		vim.api.nvim_create_autocmd('FileType', {
+			pattern = 'gdscript',
+			group = vim.api.nvim_create_augroup('gdscript_only_keymap', { clear = true }),
+			callback = function()
+				-- Connect on gdscript files
+				local port = os.getenv('GDScript_Port') or '6005'
+				local cmd = vim.lsp.rpc.connect('127.0.0.1', port)
+				local pipe = '/tmp/godot.pipe'
+				
+				vim.lsp.start({
+				  name = 'Godot',
+				  cmd = cmd,
+				  root_dir = vim.fs.dirname(vim.fs.find({ 'project.godot', '.git' }, { upward = true })[1]),
+				  on_attach = function(client, bufnr)
+					vim.api.nvim_command('echo serverstart("' .. pipe .. '")')
+				  end
+				})
+			end,
+		})
+	end)
 end)
 
 section('nvim-cmp', function(section)
@@ -240,6 +262,7 @@ section('terminal', function(section)
 		insert_mappings=false,
 		start_in_insert=false,
 		shade_terminals=false,
+		auto_scroll=false,
 		winbar = {
 			enabled = true,
 		}
