@@ -1,7 +1,7 @@
 local msk = require 'msk.utils'
 local section = msk.section
 
-section('plugins', function(section) 
+section('plugins', function(section)
 	require 'msk.plugins'
 
 	section('recompile', function(section)
@@ -40,7 +40,7 @@ section('settings', function(section)
 			tabstop = 4,
 			shiftwidth = 4,
 			wrap = false,
-			cinoptions='(1s',
+			cinoptions = '(1s',
 			termguicolors = true,
 			signcolumn = 'yes',
 			background = 'dark',
@@ -48,7 +48,7 @@ section('settings', function(section)
 		bo = {
 			tabstop = 4,
 			shiftwidth = 4,
-			cinoptions='(1s',
+			cinoptions = '(1s',
 		},
 		wo = {
 			number = true,
@@ -56,11 +56,11 @@ section('settings', function(section)
 			wrap = false,
 		},
 	}
-	
+
 	-- Apply settings checking for errors at every propperty
 	for locality, opts in pairs(settings) do
 		for opt, val in pairs(opts) do
-			msk.section('vim.'..locality..'.'..opt, function()
+			msk.section('vim.' .. locality .. '.' .. opt, function()
 				vim[locality][opt] = val
 			end)
 		end
@@ -68,22 +68,22 @@ section('settings', function(section)
 end)
 
 section('cmd-abbrevs', function(section)
-	msk.cabbrev {'git', 'Git'}
-	msk.cabbrev {'gti', 'Git'}
-	msk.cabbrev {'tig', 'Git'}
-	msk.cabbrev {'tgi', 'Git'}
+	msk.cabbrev { 'git', 'Git' }
+	msk.cabbrev { 'gti', 'Git' }
+	msk.cabbrev { 'tig', 'Git' }
+	msk.cabbrev { 'tgi', 'Git' }
 
-	msk.cabbrev {'WQ', 'wq'}
-	msk.cabbrev {'Wq', 'wq'}
-	msk.cabbrev {'wQ', 'wq'}
-	msk.cabbrev {'qw', 'wq'}
-	msk.cabbrev {'Qw', 'wq'}
-	msk.cabbrev {'qW', 'wq'}
-	msk.cabbrev {'QW', 'wq'}
+	msk.cabbrev { 'WQ', 'wq' }
+	msk.cabbrev { 'Wq', 'wq' }
+	msk.cabbrev { 'wQ', 'wq' }
+	msk.cabbrev { 'qw', 'wq' }
+	msk.cabbrev { 'Qw', 'wq' }
+	msk.cabbrev { 'qW', 'wq' }
+	msk.cabbrev { 'QW', 'wq' }
 end)
 
 section('colorscheme', function(section)
-	vim.cmd.colorscheme 'catppuccin-mocha'
+	vim.cmd.colorscheme 'catppuccin-latte'
 end)
 
 section('keymaps', function(section)
@@ -140,10 +140,18 @@ section('lsp', function(section)
 		templ = {},
 		ocamllsp = {},
 		gleam = {},
+		lua_ls = {
+			Lua = {
+				workspace = {
+					checkThirdParty = false,
+					telemetry = { enable = false },
+				}
+			}
+		},
 		zls = {},
 		ols = {},
 		terraformls = {},
-		hls= { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
+		hls = { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 		svelte = {
 			settings = {
 				svelte = {
@@ -160,7 +168,7 @@ section('lsp', function(section)
 	section('nvim-cmp', function(section)
 		defaults.capabilities = require('cmp_nvim_lsp').default_capabilities()
 	end)
-	
+
 	section('init', function(section)
 		local lsp = require 'lspconfig'
 		for server, config in pairs(lspconfigs) do
@@ -183,14 +191,14 @@ section('lsp', function(section)
 				local port = os.getenv('GDScript_Port') or '6005'
 				local cmd = vim.lsp.rpc.connect('127.0.0.1', port)
 				local pipe = '/tmp/godot.pipe'
-				
+
 				vim.lsp.start({
-				  name = 'Godot',
-				  cmd = cmd,
-				  root_dir = vim.fs.dirname(vim.fs.find({ 'project.godot', '.git' }, { upward = true })[1]),
-				  on_attach = function(client, bufnr)
-					vim.api.nvim_command('echo serverstart("' .. pipe .. '")')
-				  end
+					name = 'Godot',
+					cmd = cmd,
+					root_dir = vim.fs.dirname(vim.fs.find({ 'project.godot', '.git' }, { upward = true })[1]),
+					on_attach = function(client, bufnr)
+						vim.api.nvim_command('echo serverstart("' .. pipe .. '")')
+					end
 				})
 			end,
 		})
@@ -198,7 +206,7 @@ section('lsp', function(section)
 end)
 
 section('nvim-cmp', function(section)
-	vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+	vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 	local cmp = require('cmp')
 	cmp.setup({
@@ -254,21 +262,21 @@ section('gitgutter', function(section)
 end)
 
 section('terminal', function(section)
-	require('toggleterm').setup{
-		size=15,
-		direction='horizontal',
-	
-		open_mapping=[[<leader>o]],
-		terminal_mappings=false,
-		insert_mappings=false,
-		start_in_insert=false,
-		shade_terminals=false,
-		auto_scroll=false,
+	require('toggleterm').setup {
+		size = 15,
+		direction = 'horizontal',
+
+		open_mapping = [[<leader>o]],
+		terminal_mappings = false,
+		insert_mappings = false,
+		start_in_insert = false,
+		shade_terminals = false,
+		auto_scroll = false,
 		winbar = {
 			enabled = true,
 		}
 	}
-		
+
 	section('keymaps', function(section)
 		local t = require('toggleterm.terminal')
 
@@ -308,7 +316,7 @@ section('terminal', function(section)
 			local terms = t.get_all()
 			local n = #terms
 			if n ~= 0 then
-				local message = "There are "..n.." open terminals, please close them before quitting"
+				local message = "There are " .. n .. " open terminals, please close them before quitting"
 				if n == 1 then
 					message = "There's an open terminal, please close it before quitting"
 				end
@@ -333,7 +341,7 @@ section('terminal', function(section)
 end)
 
 section('auto-save', function(section)
-	require('auto-save').setup{
+	require('auto-save').setup {
 		debounce_delay = 5000,
 		execution_message = {
 			message = function() return "" end,
@@ -346,9 +354,9 @@ section('nvim-surround', function(section)
 end)
 
 section('telescope', function(section)
-	require('telescope').setup{
-		defaults={
-			file_ignore_patterns= {'^package%-lock%.json'}
+	require('telescope').setup {
+		defaults = {
+			file_ignore_patterns = { '^package%-lock%.json' }
 		}
 	}
 
@@ -363,7 +371,7 @@ section('telescope', function(section)
 end)
 
 section('todo-comments', function(section)
-	require('todo-comments').setup{}
+	require('todo-comments').setup {}
 end)
 
 section('treesitter', function(section)
@@ -386,7 +394,7 @@ section('treesitter', function(section)
 			parser_config.templ = {
 				install_info = {
 					url = "https://github.com/vrischmann/tree-sitter-templ.git",
-					files = {"src/parser.c", "src/scanner.c"},
+					files = { "src/parser.c", "src/scanner.c" },
 					branch = "master",
 				},
 			}
@@ -396,7 +404,7 @@ section('treesitter', function(section)
 	end)
 
 
-	require('nvim-treesitter.configs').setup{
+	require('nvim-treesitter.configs').setup {
 		ensure_installed = {
 			'bash',
 			'c',
@@ -420,4 +428,3 @@ section('treesitter', function(section)
 		highlight = { enable = true }
 	}
 end)
-
