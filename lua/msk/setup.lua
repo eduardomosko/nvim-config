@@ -68,10 +68,6 @@ section('settings', function(section)
 end)
 
 section('cmd-abbrevs', function(section)
-	msk.cabbrev { 'git', 'Git' }
-	msk.cabbrev { 'gti', 'Git' }
-	msk.cabbrev { 'tig', 'Git' }
-	msk.cabbrev { 'tgi', 'Git' }
 
 	msk.cabbrev { 'WQ', 'wq' }
 	msk.cabbrev { 'Wq', 'wq' }

@@ -1,9 +1,9 @@
 local bootstrapped = (function()
 	-- Auto install packer if not found
 	local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-	
+
 	if not vim.loop.fs_stat(install_path) then
-		vim.fn.system {'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path}
+		vim.fn.system { 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path }
 		vim.cmd 'packadd packer.nvim'
 		return true
 	end
@@ -11,7 +11,7 @@ local bootstrapped = (function()
 	return false
 end)()
 
-return require('packer').startup(function (use)
+return require('packer').startup(function(use)
 	-- Packer
 	use 'wbthomason/packer.nvim'
 
@@ -32,30 +32,30 @@ return require('packer').startup(function (use)
 	use 'saadparwaiz1/cmp_luasnip'
 
 	-- Syntax Highlighting
-	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', tag = 'v0.9.2'}
+	use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', tag = 'v0.9.2' }
 	use 'delphinus/vim-firestore'
-    use "vrischmann/tree-sitter-templ"
+	use "vrischmann/tree-sitter-templ"
 
 	-- Telescope
-	use {'nvim-telescope/telescope.nvim',
-		requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+	use { 'nvim-telescope/telescope.nvim',
+		requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } }
 	}
 
 	-- Auto save
 	use 'pocco81/auto-save.nvim'
 
 	-- Surround
-	use {"kylechui/nvim-surround", tag = "*"}
+	use { "kylechui/nvim-surround", tag = "*" }
 
 	-- Todo
-	use {"folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim"}
+	use { "folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim" }
 
 	-- Colorschemes
 	use 'morhetz/gruvbox'
 	use 'pbrisbin/vim-colors-off'
 	use 'Aliqyan-21/darkvoid.nvim'
-	use {'catppuccin/nvim', as = 'catppuccin'}
-	use {'monsonjeremy/onedark.nvim', branch = 'treesitter'}
+	use { 'catppuccin/nvim', as = 'catppuccin' }
+	use { 'monsonjeremy/onedark.nvim', branch = 'treesitter' }
 
 	-- Git
 	use 'airblade/vim-gitgutter'

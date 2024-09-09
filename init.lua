@@ -1,3 +1,1 @@
-require 'msk.setup'
--- teste
-
+require 'msk.lazy'

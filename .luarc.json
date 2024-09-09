@@ -1,0 +1,5 @@
+{
+	"workspace.library": ["/home/eduardo/.asdf/installs/neovim/0.9.5/share/nvim/runtime"],
+	"diagnostics.disable": ["redefined-local"],
+	"diagnostics.unusedLocalExclude": ["section"]
+}
