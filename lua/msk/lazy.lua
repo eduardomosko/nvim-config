@@ -374,7 +374,28 @@ require("lazy").setup({
 		{
 			'nvim-tree/nvim-tree.lua',
 			lazy = false,
-			opts = {},
+			opts = {
+				renderer = {
+					icons = {
+						show = {
+							file = false,
+						},
+						glyphs = {
+							folder = {
+								default = "🗀 ",
+								open = "🗁 ",
+								empty = "🖿 ",
+								arrow_closed = "",
+								arrow_open = "",
+
+								-- couldnt make these show
+								symlink = "SYMLINK",
+								symlink_open = "SYMLINK_OPEN",
+							}
+						}
+					},
+				},
+			},
 		},
 		{
 			'nvim-telescope/telescope.nvim',
