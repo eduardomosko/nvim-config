@@ -382,7 +382,7 @@ require("lazy").setup({
 			end
 		},
 
-		{ "kylechui/nvim-surround", tag = "*", opts = {} },
+		{ "kylechui/nvim-surround", opts = {} },
 	},
 
 	install = { colorscheme = { "catppuccin-latte", "delek" } },
