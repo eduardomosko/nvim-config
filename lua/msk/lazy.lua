@@ -421,6 +421,7 @@ require("lazy").setup({
 		{
 			"shortcuts/no-neck-pain.nvim",
 			version = '*',
+			minSideBufferWidth = 1,
 			lazy = false,
 			opts = {
 				width = 192,
