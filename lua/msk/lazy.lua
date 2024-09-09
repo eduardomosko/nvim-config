@@ -68,6 +68,23 @@ section('navigation', function(section)
 	vim.keymap.set('n', '<leader>J', '<cmd>tabp<cr>')
 end)
 
+section('tree+nnpain', function(section)
+	local tree_open = false
+	vim.keymap.set('n', '<leader>t', function()
+		local api = require('nvim-tree.api')
+		local nnpain = require('no-neck-pain.main')
+		if tree_open then
+			api.tree.close()
+			nnpain.enable()
+			tree_open = false
+		else
+			nnpain.disable()
+			api.tree.open()
+			tree_open = true
+		end
+	end)
+end)
+
 require("lazy").setup({
 	spec = {
 		-- colorscheme
@@ -357,11 +374,7 @@ require("lazy").setup({
 		{
 			'nvim-tree/nvim-tree.lua',
 			lazy = false,
-			config = function()
-				require('nvim-tree').setup()
-
-				vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeToggle<cr>')
-			end
+			opts = {},
 		},
 		{
 			'nvim-telescope/telescope.nvim',
@@ -382,11 +395,31 @@ require("lazy").setup({
 			end
 		},
 
-		{ "kylechui/nvim-surround", opts = {} },
+		{ "kylechui/nvim-surround", opts = {}, version = '*' },
+
+		{
+			"shortcuts/no-neck-pain.nvim",
+			version = '*',
+			lazy = false,
+			opts = {
+				width = 192,
+				autocmds = {
+					enableOnVimEnter = true,
+					enableOnTabEnter = true,
+					skipEnteringNoNeckPainBuffer = true,
+				},
+				integrations = {
+					NvimTree = {
+						reopen = false,
+					},
+				},
+			},
+		},
 	},
 
 	install = { colorscheme = { "catppuccin-latte", "delek" } },
-	checker = { enabled = true },
+	checker = { enabled = false },
+	change_detection = { enabled = false, notify = false },
 
 	performance = {
 		rtp = {
