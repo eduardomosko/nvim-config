@@ -250,7 +250,8 @@ require("lazy").setup({
 					'zig',
 					'terraform',
 				},
-				highlight = { enable = true }
+				highlight = { enable = true },
+				indent = { enable = true }
 			}
 		},
 		{
@@ -291,6 +292,11 @@ require("lazy").setup({
 		{
 			'akinsho/toggleterm.nvim',
 			config = function()
+				local shell = vim.o.shell
+				if vim.fn.executable('screena') then
+					shell = 'screen -q'
+				end
+
 				require('toggleterm').setup({
 					size = 15,
 					direction = 'horizontal',
@@ -303,7 +309,9 @@ require("lazy").setup({
 					auto_scroll = false,
 					winbar = {
 						enabled = true,
-					}
+					},
+
+					shell = shell,
 				})
 
 				vim.keymap.set('t', '<esc>', '<C-\\><C-n>')
