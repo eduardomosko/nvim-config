@@ -68,6 +68,14 @@ section('navigation', function(section)
 	vim.keymap.set('n', '<leader>J', '<cmd>tabp<cr>')
 end)
 
+section('godot', function(section)
+	local gdproject = vim.fn.getcwd() .. '/project.godot'
+	if (vim.uv or vim.loop).fs_stat(gdproject) then
+		vim.fn.serverstart './.godot.pipe'
+	end
+end)
+
+--[[
 section('tree+nnpain', function(section)
 	local tree_open = false
 	vim.keymap.set('n', '<leader>t', function()
@@ -84,6 +92,7 @@ section('tree+nnpain', function(section)
 		end
 	end)
 end)
+]]
 
 require("lazy").setup({
 	spec = {
@@ -144,7 +153,8 @@ require("lazy").setup({
 								},
 							},
 						},
-					}
+					},
+					gdscript = {},
 				}
 
 
@@ -229,36 +239,42 @@ require("lazy").setup({
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
 			tag = 'v0.9.2',
-			opts = {
-				ensure_installed = {
-					'bash',
-					'c',
-					'cpp',
-					'css',
-					'gleam',
-					'go',
-					'html',
-					'javascript',
-					'json',
-					'lua',
-					'ocaml',
-					'python',
-					'svelte',
-					'templ',
-					'typescript',
-					'yaml',
-					'zig',
-					'terraform',
-				},
-				highlight = { enable = true },
-				indent = { enable = true }
-			}
+			lazy = false,
+			config = function()
+				require('nvim-treesitter.configs').setup({
+					ensure_installed = {
+						'bash',
+						'c',
+						'cpp',
+						'css',
+						'gleam',
+						'go',
+						'html',
+						'javascript',
+						'json',
+						'lua',
+						'ocaml',
+						'python',
+						'svelte',
+						'typescript',
+						'yaml',
+						'zig',
+						'terraform',
+
+						'gdscript',
+						--'godot_resource',
+						--'gdshader',
+					},
+					highlight = { enable = true },
+				})
+			end
 		},
 		{
 			"folke/todo-comments.nvim",
 			dependencies = "nvim-lua/plenary.nvim",
 			opts = {},
 		},
+		{ 'habamax/vim-godot' },
 
 		-- git
 		{
@@ -293,9 +309,9 @@ require("lazy").setup({
 			'akinsho/toggleterm.nvim',
 			config = function()
 				local shell = vim.o.shell
-				if vim.fn.executable('screena') then
-					shell = 'screen -q'
-				end
+				--if vim.fn.executable('tmux') then
+				--	shell = 'tmux'
+				--end
 
 				require('toggleterm').setup({
 					size = 15,
@@ -379,6 +395,7 @@ require("lazy").setup({
 		},
 
 		-- files
+		--[[
 		{
 			'nvim-tree/nvim-tree.lua',
 			lazy = false,
@@ -405,6 +422,7 @@ require("lazy").setup({
 				},
 			},
 		},
+		]]
 		{
 			'nvim-telescope/telescope.nvim',
 			tag = '0.1.8',
@@ -413,7 +431,8 @@ require("lazy").setup({
 				local builtin = require('telescope.builtin')
 				require('telescope').setup({
 					defaults = {
-						file_ignore_patterns = { '^package%-lock%.json' }
+						file_ignore_patterns = { '^package%-lock%.json' },
+						winblend = 1
 					}
 				})
 
@@ -421,6 +440,27 @@ require("lazy").setup({
 				vim.keymap.set('n', '<leader>fg', builtin.live_grep)
 				vim.keymap.set('n', '<leader>fb', builtin.buffers)
 				vim.keymap.set('n', '<leader>fh', builtin.help_tags)
+			end
+		},
+		{
+			"ThePrimeagen/harpoon",
+			branch = "harpoon2",
+			dependencies = { "nvim-lua/plenary.nvim" },
+			config = function()
+				local harpoon = require("harpoon")
+				harpoon:setup()
+
+				vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+				vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+				vim.keymap.set("n", "<C-j>", function() harpoon:list():select(1) end)
+				vim.keymap.set("n", "<C-k>", function() harpoon:list():select(2) end)
+				vim.keymap.set("n", "<C-l>", function() harpoon:list():select(3) end)
+				vim.keymap.set("n", "<C-;>", function() harpoon:list():select(4) end)
+
+				-- Toggle previous & next buffers stored within Harpoon list
+				vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+				vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 			end
 		},
 
