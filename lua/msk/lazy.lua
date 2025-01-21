@@ -29,7 +29,7 @@ section('settings', function(section)
 		},
 		wo = {
 			number = true,
-			cursorline = true,
+			cursorline = false,
 			wrap = false,
 		},
 		opt = {
@@ -100,11 +100,16 @@ require("lazy").setup({
 		{
 			'catppuccin/nvim',
 			lazy = false,
-			priority = 1000,
+			priority = 1000, -- Ensure it loads first
 			config = function()
-				vim.cmd 'colorscheme catppuccin-latte'
+				vim.cmd 'colorscheme catppuccin-frappe'
 			end,
 		},
+		{ 'arzg/vim-colors-xcode', lazy = false },
+		{ 'shaunsingh/nord.nvim',  lazy = false },
+		{ 'rmehri01/onenord.nvim', lazy = false },
+		{ 'navarasu/onedark.nvim', lazy = false },
+		{ 'folke/tokyonight.nvim', lazy = false },
 
 		-- lsp
 		{
@@ -141,6 +146,7 @@ require("lazy").setup({
 					},
 					zls = {},
 					ols = {},
+					glsl_analyzer = {},
 					terraformls = {},
 					hls = { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 					svelte = {
@@ -249,7 +255,6 @@ require("lazy").setup({
 						'css',
 						'gleam',
 						'go',
-						'html',
 						'javascript',
 						'json',
 						'lua',
@@ -466,7 +471,7 @@ require("lazy").setup({
 
 		{ "kylechui/nvim-surround", opts = {}, version = '*' },
 
-		{
+		--[[{
 			"shortcuts/no-neck-pain.nvim",
 			version = '*',
 			minSideBufferWidth = 1,
@@ -484,10 +489,13 @@ require("lazy").setup({
 					},
 				},
 			},
-		},
+		},]] --
 	},
 
-	install = { colorscheme = { "catppuccin-latte", "delek" } },
+	install = {
+		colorscheme = { "catppuccin-frappe", "delek" }
+		--colorscheme = { "catppuccin-latte", "delek" }
+	},
 	checker = { enabled = false },
 	change_detection = { enabled = false, notify = false },
 

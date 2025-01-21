@@ -374,6 +374,7 @@ section('treesitter', function(section)
 	section('custom-parsers', function(section)
 		local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
+		--[[
 		section('my-svelte', function(section)
 			-- Uses my version of parser
 			parser_config.svelte = {
@@ -385,6 +386,7 @@ section('treesitter', function(section)
 				},
 			}
 		end)
+		]]--
 
 		section('go-templ', function(section)
 			parser_config.templ = {
