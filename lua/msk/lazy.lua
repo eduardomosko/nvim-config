@@ -75,6 +75,19 @@ section('godot', function(section)
 	end
 end)
 
+section('neovide', function(section)
+	if vim.g.neovide then
+		vim.g.fullscreen = true
+		vim.o.guifont = "Ubuntu Mono:h10"
+
+		vim.keymap.set('v', '<c-s-c>', '"+y')   -- Copy
+		vim.keymap.set('n', '<c-s-v>', '"+P')   -- Paste normal mode
+		vim.keymap.set('v', '<c-s-v>', '"+P')   -- Paste visual mode
+		vim.keymap.set('c', '<c-s-v>', '<C-R>+') -- Paste command mode
+		vim.keymap.set('i', '<c-s-v>', '<C-R>+') -- Paste insert mode
+	end
+end)
+
 --[[
 section('tree+nnpain', function(section)
 	local tree_open = false
@@ -258,6 +271,7 @@ require("lazy").setup({
 						'javascript',
 						'json',
 						'lua',
+						'vimdoc',
 						'ocaml',
 						'python',
 						'svelte',
@@ -438,13 +452,26 @@ require("lazy").setup({
 					defaults = {
 						file_ignore_patterns = { '^package%-lock%.json' },
 						winblend = 1
-					}
+					},
+					pickers = {
+						find_files = {
+							-- include hidden files
+							find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+						},
+					},
 				})
 
 				vim.keymap.set('n', '<leader>ff', builtin.find_files)
 				vim.keymap.set('n', '<leader>fg', builtin.live_grep)
 				vim.keymap.set('n', '<leader>fb', builtin.buffers)
 				vim.keymap.set('n', '<leader>fh', builtin.help_tags)
+
+				vim.keymap.set('n', '<leader>fF', function()
+					-- find "all" (include from .gitignore, but not .git)
+					builtin.find_files({
+						find_command = { "rg", "--files", "--hidden", '--no-ignore-vcs', "--glob", "!**/.git/*" },
+					})
+				end)
 			end
 		},
 		{
