@@ -9,6 +9,10 @@ section('settings', function(section)
 			mapleader = " ",
 			loaded_netrw = 1,
 			loaded_netrwPlugin = 1,
+			markdown_fenced_languages = {
+				'ts=typescript',
+			},
+			zig_fmt_autosave = false,
 		},
 		o = {
 			showmode = false,
@@ -66,6 +70,8 @@ section('navigation', function(section)
 
 	vim.keymap.set('n', '<leader>K', '<cmd>tabn<cr>')
 	vim.keymap.set('n', '<leader>J', '<cmd>tabp<cr>')
+
+	vim.keymap.set('n', '<leader>2', '<cmd>w<cr>')
 end)
 
 section('godot', function(section)
@@ -76,16 +82,41 @@ section('godot', function(section)
 end)
 
 section('neovide', function(section)
-	if vim.g.neovide then
+	if not vim.g.neovide then
+		return
+	end
+
+	section('options', function(section)
 		vim.g.fullscreen = true
 		vim.o.guifont = "Ubuntu Mono:h10"
+	end)
 
-		vim.keymap.set('v', '<c-s-c>', '"+y')   -- Copy
-		vim.keymap.set('n', '<c-s-v>', '"+P')   -- Paste normal mode
-		vim.keymap.set('v', '<c-s-v>', '"+P')   -- Paste visual mode
+	section('keymaps', function(section)
+		vim.keymap.set('v', '<c-s-c>', '"+y') -- Copy
+		vim.keymap.set('n', '<c-s-v>', '"+P') -- Paste normal mode
+		vim.keymap.set('v', '<c-s-v>', '"+P') -- Paste visual mode
 		vim.keymap.set('c', '<c-s-v>', '<C-R>+') -- Paste command mode
 		vim.keymap.set('i', '<c-s-v>', '<C-R>+') -- Paste insert mode
-	end
+	end)
+
+	section('colors', function(section)
+		vim.g.terminal_color_0  = "#494d64"
+		vim.g.terminal_color_1  = "#ed8796"
+		vim.g.terminal_color_2  = "#a6da95"
+		vim.g.terminal_color_3  = "#eed49f"
+		vim.g.terminal_color_4  = "#8aadf4"
+		vim.g.terminal_color_5  = "#f5bde6"
+		vim.g.terminal_color_6  = "#8bd5ca"
+		vim.g.terminal_color_7  = "#b8c0e0"
+		vim.g.terminal_color_8  = "#5b6078"
+		vim.g.terminal_color_9  = "#ed8796"
+		vim.g.terminal_color_10 = "#a6da95"
+		vim.g.terminal_color_11 = "#eed49f"
+		vim.g.terminal_color_12 = "#8aadf4"
+		vim.g.terminal_color_13 = "#f5bde6"
+		vim.g.terminal_color_14 = "#8bd5ca"
+		vim.g.terminal_color_15 = "#a5adcb"
+	end)
 end)
 
 --[[
@@ -147,6 +178,7 @@ require("lazy").setup({
 					html = {},
 					pyright = {},
 					templ = {},
+					volar = {},
 					ocamllsp = {},
 					gleam = {},
 					lua_ls = {
@@ -161,7 +193,6 @@ require("lazy").setup({
 					ols = {},
 					glsl_analyzer = {},
 					terraformls = {},
-					hls = { filetypes = { 'haskell', 'lhaskell', 'cabal' }, },
 					svelte = {
 						settings = {
 							svelte = {
@@ -192,6 +223,7 @@ require("lazy").setup({
 									end
 
 									set('K', vim.lsp.buf.hover)
+									vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = buf })
 									set(']d', vim.diagnostic.goto_next)
 									set('[d', vim.diagnostic.goto_prev)
 									set('<leader>d', vim.lsp.buf.definition)
@@ -494,6 +526,13 @@ require("lazy").setup({
 				vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
 				vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 			end
+		},
+
+		{
+			'stevearc/oil.nvim',
+			opts = {},
+			dependencies = { { "echasnovski/mini.icons", opts = {} } },
+			-- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
 		},
 
 		{ "kylechui/nvim-surround", opts = {}, version = '*' },
