@@ -71,7 +71,7 @@ section('navigation', function(section)
 	vim.keymap.set('n', '<leader>K', '<cmd>tabn<cr>')
 	vim.keymap.set('n', '<leader>J', '<cmd>tabp<cr>')
 
-	vim.keymap.set('n', '<leader>2', '<cmd>w<cr>')
+	vim.keymap.set('n', '<leader>w', '<cmd>w<cr>')
 end)
 
 section('godot', function(section)
