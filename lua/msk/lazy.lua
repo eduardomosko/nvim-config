@@ -88,7 +88,7 @@ section('neovide', function(section)
 
 	section('options', function(section)
 		vim.g.fullscreen = true
-		vim.o.guifont = "Ubuntu Mono:h10"
+		vim.o.guifont = "BlexMono Nerd Font:h9"
 	end)
 
 	section('keymaps', function(section)
@@ -208,7 +208,6 @@ require("lazy").setup({
 				}
 
 
-				local lsp = require('lspconfig')
 				for server, config in pairs(lspconfigs) do
 					section('lspconfig/' .. server, function(section)
 						local defaults = {
@@ -224,8 +223,8 @@ require("lazy").setup({
 
 									set('K', vim.lsp.buf.hover)
 									vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = buf })
-									set(']d', vim.diagnostic.goto_next)
-									set('[d', vim.diagnostic.goto_prev)
+									set(']d', function() vim.diagnostic.jump({ count = 1, float = true }) end)
+									set('[d', function() vim.diagnostic.jump({ count = -1, float = true }) end)
 									set('<leader>d', vim.lsp.buf.definition)
 									set('<leader>T', vim.lsp.buf.type_definition)
 									set('<leader>gi', vim.lsp.buf.implementation)
@@ -239,7 +238,7 @@ require("lazy").setup({
 							end,
 						}
 
-						lsp[server].setup(vim.tbl_deep_extend('keep', config, defaults))
+						vim.lsp.config(server, vim.tbl_deep_extend('keep', config, defaults))
 					end)
 				end
 			end
@@ -250,10 +249,12 @@ require("lazy").setup({
 
 			dependencies = {
 				"hrsh7th/cmp-nvim-lsp",
+				'hrsh7th/cmp-nvim-lsp-signature-help',
 				"hrsh7th/cmp-buffer",
 				"hrsh7th/cmp-path",
 				'L3MON4D3/LuaSnip',
 				'saadparwaiz1/cmp_luasnip',
+				'petertriho/cmp-git',
 			},
 
 			config = function()
@@ -276,20 +277,45 @@ require("lazy").setup({
 						['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 					}),
 					sources = cmp.config.sources({
+						--{ name = 'codeium' },
 						{ name = 'nvim_lsp' },
+						{ name = 'nvim_lsp_signature_help' },
 						{ name = 'luasnip' },
-					}, {
+						{ name = 'buffer' },
+						{ name = 'path' },
+					})
+				})
+
+				cmp.setup.filetype('oil', {
+					sources = cmp.config.sources({
+						{ name = 'buffer' },
+					})
+				})
+
+				cmp.setup.filetype('gitcommit', {
+					sources = cmp.config.sources({
+						{ name = 'git' },
 						{ name = 'buffer' },
 					})
 				})
 			end,
 		},
+		--{
+		--	"Exafunction/windsurf.nvim",
+		--	dependencies = {
+		--		"nvim-lua/plenary.nvim",
+		--		"hrsh7th/nvim-cmp",
+		--	},
+		--	config = function()
+		--		require("codeium").setup({})
+		--	end
+		--},
 
 		-- highlighting
 		{
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
-			tag = 'v0.9.2',
+			tag = 'v0.10.0',
 			lazy = false,
 			config = function()
 				require('nvim-treesitter.configs').setup({
@@ -536,6 +562,7 @@ require("lazy").setup({
 		},
 
 		{ "kylechui/nvim-surround", opts = {}, version = '*' },
+
 
 		--[[{
 			"shortcuts/no-neck-pain.nvim",
