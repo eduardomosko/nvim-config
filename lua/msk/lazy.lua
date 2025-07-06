@@ -75,10 +75,30 @@ section('navigation', function(section)
 end)
 
 section('godot', function(section)
-	local gdproject = vim.fn.getcwd() .. '/project.godot'
-	if (vim.uv or vim.loop).fs_stat(gdproject) then
-		vim.fn.serverstart './.godot.pipe'
-	end
+	section('one-per-project', function()
+		local gdproject = vim.fn.getcwd() .. '/project.godot'
+
+		---@diagnostic disable-next-line
+		if (vim.uv or vim.loop).fs_stat(gdproject) then
+			vim.fn.serverstart './.godot.pipe'
+		end
+	end)
+
+	section('ignore-error-on-connect-signal', function()
+		---@diagnostic disable
+
+		local Client = require('vim.lsp.client')
+		local original_write_error = Client.write_error
+		Client.write_error = function(self, code, err)
+			if self.name == 'gdscript' and code == vim.lsp.client_errors.NO_RESULT_CALLBACK_FOUND then
+				-- ignore this kind of error
+				return
+			end
+			original_write_error(self, code, err)
+		end
+
+		---@diagnostic enable
+	end)
 end)
 
 section('neovide', function(section)
@@ -169,78 +189,54 @@ require("lazy").setup({
 				{ "hrsh7th/cmp-nvim-lsp" }
 			},
 			config = function()
-				local lspconfigs = {
-					rust_analyzer = {},
-					clangd = {},
-					jdtls = {},
-					gopls = {},
-					ts_ls = {},
-					html = {},
-					pyright = {},
-					templ = {},
-					volar = {},
-					ocamllsp = {},
-					gleam = {},
-					lua_ls = {
+				vim.lsp.config('*', {
+					flags = { debounce_text_changes = 150 },
+					capabilities = require('cmp_nvim_lsp').default_capabilities(),
+					on_attach = function(client, buf)
+						_ = client
+
+						section('keymaps', function(section)
+							local function set(km, cmd)
+								vim.keymap.set('n', km, cmd, { buffer = buf })
+							end
+
+							set('K', vim.lsp.buf.hover)
+							vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = buf })
+							set(']d', function() vim.diagnostic.jump({ count = 1, float = true }) end)
+							set('[d', function() vim.diagnostic.jump({ count = -1, float = true }) end)
+							set('<leader>d', vim.lsp.buf.definition)
+							set('<leader>T', vim.lsp.buf.type_definition)
+							set('<leader>gi', vim.lsp.buf.implementation)
+							set('<leader>rn', vim.lsp.buf.rename)
+							set('<leader>R', '<cmd>LspRestart<cr>')
+
+							section('format', function(section)
+								set('<leader>i', vim.lsp.buf.format)
+							end)
+						end)
+					end,
+				})
+
+				vim.lsp.config('lua_ls', {
+					settings = {
 						Lua = {
 							workspace = {
 								checkThirdParty = false,
 								telemetry = { enable = false },
 							}
 						}
-					},
-					zls = {},
-					ols = {},
-					glsl_analyzer = {},
-					terraformls = {},
-					svelte = {
-						settings = {
-							svelte = {
-								plugin = {
-									svelte = {
-										useNewTransformation = true,
-									},
-								},
-							},
-						},
-					},
-					gdscript = {},
-				}
+					}
+				})
 
-
-				for server, config in pairs(lspconfigs) do
-					section('lspconfig/' .. server, function(section)
-						local defaults = {
-							flags = { debounce_text_changes = 150 },
-							capabilities = require('cmp_nvim_lsp').default_capabilities(),
-							on_attach = function(client, buf)
-								_ = client
-
-								section('keymaps', function(section)
-									local function set(km, cmd)
-										vim.keymap.set('n', km, cmd, { buffer = buf })
-									end
-
-									set('K', vim.lsp.buf.hover)
-									vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = buf })
-									set(']d', function() vim.diagnostic.jump({ count = 1, float = true }) end)
-									set('[d', function() vim.diagnostic.jump({ count = -1, float = true }) end)
-									set('<leader>d', vim.lsp.buf.definition)
-									set('<leader>T', vim.lsp.buf.type_definition)
-									set('<leader>gi', vim.lsp.buf.implementation)
-									set('<leader>rn', vim.lsp.buf.rename)
-									set('<leader>R', '<cmd>LspRestart<cr>')
-
-									section('format', function(section)
-										set('<leader>i', vim.lsp.buf.format)
-									end)
-								end)
-							end,
-						}
-
-						vim.lsp.config(server, vim.tbl_deep_extend('keep', config, defaults))
-					end)
-				end
+				vim.lsp.enable({
+					"gopls",
+					"ts_ls",
+					"html",
+					"lua_ls",
+					"gdscript",
+					"svelte",
+					"ols",
+				})
 			end
 		},
 		{
