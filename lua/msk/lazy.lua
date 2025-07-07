@@ -189,32 +189,21 @@ require("lazy").setup({
 				{ "hrsh7th/cmp-nvim-lsp" }
 			},
 			config = function()
+				vim.api.nvim_create_autocmd('LspAttach', {
+					callback = function(ev)
+						vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>d', vim.lsp.buf.definition, { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>T', vim.lsp.buf.type_definition, { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>R', '<cmd>LspRestart<cr>', { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>i', vim.lsp.buf.format, { buffer = ev.buf })
+					end
+				})
+
 				vim.lsp.config('*', {
 					flags = { debounce_text_changes = 150 },
 					capabilities = require('cmp_nvim_lsp').default_capabilities(),
-					on_attach = function(client, buf)
-						_ = client
-
-						section('keymaps', function(section)
-							local function set(km, cmd)
-								vim.keymap.set('n', km, cmd, { buffer = buf })
-							end
-
-							set('K', vim.lsp.buf.hover)
-							vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = buf })
-							set(']d', function() vim.diagnostic.jump({ count = 1, float = true }) end)
-							set('[d', function() vim.diagnostic.jump({ count = -1, float = true }) end)
-							set('<leader>d', vim.lsp.buf.definition)
-							set('<leader>T', vim.lsp.buf.type_definition)
-							set('<leader>gi', vim.lsp.buf.implementation)
-							set('<leader>rn', vim.lsp.buf.rename)
-							set('<leader>R', '<cmd>LspRestart<cr>')
-
-							section('format', function(section)
-								set('<leader>i', vim.lsp.buf.format)
-							end)
-						end)
-					end,
 				})
 
 				vim.lsp.config('lua_ls', {
@@ -273,7 +262,6 @@ require("lazy").setup({
 						['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 					}),
 					sources = cmp.config.sources({
-						--{ name = 'codeium' },
 						{ name = 'nvim_lsp' },
 						{ name = 'nvim_lsp_signature_help' },
 						{ name = 'luasnip' },
@@ -296,16 +284,6 @@ require("lazy").setup({
 				})
 			end,
 		},
-		--{
-		--	"Exafunction/windsurf.nvim",
-		--	dependencies = {
-		--		"nvim-lua/plenary.nvim",
-		--		"hrsh7th/nvim-cmp",
-		--	},
-		--	config = function()
-		--		require("codeium").setup({})
-		--	end
-		--},
 
 		-- highlighting
 		{
@@ -382,9 +360,6 @@ require("lazy").setup({
 			'akinsho/toggleterm.nvim',
 			config = function()
 				local shell = vim.o.shell
-				--if vim.fn.executable('tmux') then
-				--	shell = 'tmux'
-				--end
 
 				require('toggleterm').setup({
 					size = 15,
@@ -468,34 +443,6 @@ require("lazy").setup({
 		},
 
 		-- files
-		--[[
-		{
-			'nvim-tree/nvim-tree.lua',
-			lazy = false,
-			opts = {
-				renderer = {
-					icons = {
-						show = {
-							file = false,
-						},
-						glyphs = {
-							folder = {
-								default = "🗀 ",
-								open = "🗁 ",
-								empty = "🖿 ",
-								arrow_closed = "",
-								arrow_open = "",
-
-								-- couldnt make these show
-								symlink = "SYMLINK",
-								symlink_open = "SYMLINK_OPEN",
-							}
-						}
-					},
-				},
-			},
-		},
-		]]
 		{
 			'nvim-telescope/telescope.nvim',
 			tag = '0.1.8',
@@ -549,36 +496,13 @@ require("lazy").setup({
 				vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 			end
 		},
-
 		{
 			'stevearc/oil.nvim',
 			opts = {},
 			dependencies = { { "echasnovski/mini.icons", opts = {} } },
-			-- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
 		},
 
 		{ "kylechui/nvim-surround", opts = {}, version = '*' },
-
-
-		--[[{
-			"shortcuts/no-neck-pain.nvim",
-			version = '*',
-			minSideBufferWidth = 1,
-			lazy = false,
-			opts = {
-				width = 192,
-				autocmds = {
-					enableOnVimEnter = true,
-					enableOnTabEnter = true,
-					skipEnteringNoNeckPainBuffer = true,
-				},
-				integrations = {
-					NvimTree = {
-						reopen = false,
-					},
-				},
-			},
-		},]] --
 	},
 
 	install = {
