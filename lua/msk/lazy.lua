@@ -193,11 +193,21 @@ require("lazy").setup({
 					callback = function(ev)
 						vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = ev.buf })
 						vim.keymap.set('n', '<leader>d', vim.lsp.buf.definition, { buffer = ev.buf })
-						vim.keymap.set('n', '<leader>T', vim.lsp.buf.type_definition, { buffer = ev.buf })
-						vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, { buffer = ev.buf })
-						vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = ev.buf })
 						vim.keymap.set('n', '<leader>R', '<cmd>LspRestart<cr>', { buffer = ev.buf })
 						vim.keymap.set('n', '<leader>i', vim.lsp.buf.format, { buffer = ev.buf })
+
+						--vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>gi', function () print('use gri instead') end, { buffer = ev.buf })
+
+						--vim.keymap.set('n', '<leader>T', vim.lsp.buf.type_definition, { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>T', function () print('use grt instead') end, { buffer = ev.buf })
+
+						--vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = ev.buf })
+						vim.keymap.set('n', '<leader>rn', function () print('use grn instead') end, { buffer = ev.buf })
+
+						-- show floating after diagnostic navigation
+						vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, { buffer = ev.buf })
+						vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, { buffer = ev.buf })
 					end
 				})
 
